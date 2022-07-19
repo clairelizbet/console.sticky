@@ -1,6 +1,6 @@
 {
   "name": "console.sticky",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Write messages to the console that you want to ensure will be read",
   "scripts": {
     "build": "tsc",
@@ -15,7 +15,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/clairelizbet/tabEQ.git"
+    "url": "git+https://github.com/clairelizbet/console.sticky.git"
   },
   "keywords": [
     "console"
