@@ -6,6 +6,12 @@ The logger uses a timer and listens for console log calls. Once the time or call
 
 ## ℹ Usage
 
+Install the package using NPM
+
+```sh
+npm install console.sticky
+```
+
 In this basic example, we call `addConsoleSticky` to create a sticky
 
 ```js
