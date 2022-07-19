@@ -1,0 +1,51 @@
+{
+  "name": "console.sticky",
+  "version": "1.0.0",
+  "description": "Write messages to the console that you want to ensure will be read",
+  "scripts": {
+    "build": "tsc",
+    "build:dev": "tsc --incremental",
+    "test": "cd tests && tsc && NODE_OPTIONS=--experimental-vm-modules npx jest"
+  },
+  "type": "module",
+  "main": "dist/index.mjs",
+  "browserslist": [
+    "last 5 Chrome versions",
+    "last 5 Firefox versions"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/clairelizbet/tabEQ.git"
+  },
+  "keywords": [
+    "console"
+  ],
+  "author": "claire (https://github.com/clairelizbet)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/clairelizbet/console.sticky/issues"
+  },
+  "homepage": "https://github.com/clairelizbet/console.sticky#readme",
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": false,
+    "singleQuote": true
+  },
+  "jest": {
+    "testRegex": "/tests/bin/.*\\.test\\.m?js"
+  },
+  "staticFiles": {
+    "staticPath": [
+      "static",
+      "manifest.json"
+    ]
+  },
+  "devDependencies": {
+    "@tsconfig/node16": "^1.0.3",
+    "@tsconfig/recommended": "^1.0.1",
+    "@types/jest": "^28.1.4",
+    "jest": "^28.1.2",
+    "typescript": "^4.7.4"
+  }
+}
