@@ -1,6 +1,6 @@
 {
   "name": "console.sticky",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Write messages to the console that you want to ensure will be read",
   "scripts": {
     "build": "tsc",
