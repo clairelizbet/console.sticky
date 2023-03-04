@@ -7,6 +7,9 @@
     "build:dev": "tsc --incremental",
     "test": "cd tests && tsc && NODE_OPTIONS=--experimental-vm-modules npx jest"
   },
+  "files": [
+    "dist/"
+  ],
   "type": "module",
   "main": "dist/index.mjs",
   "browserslist": [
