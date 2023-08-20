@@ -19,11 +19,15 @@ jobs:
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: sudo apt-get install -y zip
+      - run: zip -r dist.zip dist
       - name: Create release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.ref_name }}
         run: |
           gh release create "$tag" \
-            --repo="$GITHUB_REPOSITORY" \
-            --title="Version ${tag#v}" \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "Version ${tag#v}" \
+            --notes-file "../release.md" \
+            "${GITHUB_WORKSPACE}/dist.zip"
