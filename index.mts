@@ -12,11 +12,25 @@ import { Styles } from './internals/types/styles.mjs'
 
 const stickyPrinterKeys: symbol[] = []
 
-export function attachConsoleSticky(override = false): Promise<boolean> {
+interface Options {
+  override?: boolean
+}
+
+export function attachConsoleSticky(override?: boolean): Promise<boolean>
+export function attachConsoleSticky(options: Options): Promise<boolean>
+export function attachConsoleSticky(
+  options: boolean | Options = false
+): Promise<boolean> {
+  const override = typeof options === 'boolean' ? options : options.override
   return attachFnToConsole(logSticky, 'sticky', override)
 }
 
-export function attachConsoleStickySync(override = false): boolean {
+export function attachConsoleStickySync(override?: boolean): boolean
+export function attachConsoleStickySync(options: Options): boolean
+export function attachConsoleStickySync(
+  options: boolean | Options = false
+): boolean {
+  const override = typeof options === 'boolean' ? options : options.override
   return attachFnToConsoleSync(logSticky, 'sticky', override)
 }
 
