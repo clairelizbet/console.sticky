@@ -90,10 +90,5 @@ removeAllConsoleStickies()
 
 // Returns a Map<Symbol, Function> of all active stickies
 getAllConsoleStickies()
-```
-
-## 📄 License
-
-This project has zero dependencies and is permissively licensed.
-
-[![MIT License](https://raw.githubusercontent.com/clairelizbet/licenses/main/mit/mit.svg)](license.md)
+This project has zero dependencies and is licensed under the
+[Apache 2.0 License](license.md).
