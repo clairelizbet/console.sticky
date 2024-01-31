@@ -52,7 +52,7 @@ export function logSticky(...messages: string[]): symbol | undefined
  * Immediately logs a message to the console and continues to log the message at a
  * regular interval and after reaching a threshold of accumulated console messages
  *
- * @param objects Objects that will be logged (as JSON strings if possible)
+ * @param objects Objects that will be logged
  *
  * @returns Key of the sticky printer, which can be used to remove it later
  */

@@ -1,94 +1,96 @@
 # 📌 console.sticky
 
-Automatically and repeatedly log important console messages like self-XSS warnings.
+Automatically and repeatedly log important console messages like self-XSS
+warnings.
 
-The logger uses a timer and listens for console log calls. Once the time or call threshold is reached, the sticky messages are logged.
+Of course, this isn't true "sticky" messages, but it's about the closest
+approximation available.
 
-## ℹ Usage
-
-Install the package using NPM
+## Usage
 
 ```sh
 npm install console.sticky
 ```
 
-In this basic example, we call `addConsoleSticky` to create a sticky
+### Example
 
 ```js
-import { addConsoleSticky } from 'console.sticky'
+import { printStyledSticky, removeSticky } from 'console.sticky'
 
-// addConsoleSticky can be called in the same manner as console.log
-addConsoleSticky('Important message!')
+// Print a sticky message and store its key
+const messageKey = printStyledSticky('Important message!', StickyPreset.Notice)
 
-// Including full support for message styling
-addConsoleSticky('%cImportant %cmessage!', 'color:red', 'color:blue')
+// You can use the key to clean up when the sticky is no longer needed
+removeSticky(messageKey)
 ```
 
-Stickies can be styled using Presets
+## API
+
+### printSticky
+
+Immediately logs a message to the console and continues to log the message at a
+regular interval and after reaching a threshold of accumulated console messages.
+
+Supports being called in the same way as the standard `console.log` function,
+including formatting specifiers (e.g. `%c`).
+
+**Returns** `symbol | undefined`
+
+If the call is successful, a `symbol` key is returned that can be used to later
+remove the sticky with `removeSticky(key)`.
+
+Otherwise, `undefined` is returned.
 
 ```js
-import { addStyledConsoleSticky, StickyPreset } from 'console.sticky'
+import { printSticky } from 'console.sticky'
 
-/* StickyPreset has two options available:
- * ImportantNotice
- * ImportantWarning
- */
-addStyledConsoleSticky('Important message!', StickyPreset.ImportantNotice)
+// Basic usage
+let messageKey = printSticky('Important message!')
+
+// Prints "Important" in red and "message" in blue
+messageKey = printSticky('%cImportant %cmessage!', 'color:red', 'color:blue')
 ```
 
-The `addConsoleSticky` function can be attached globally as `console.sticky`
+### printStyledSticky
+
+Same as `printSticky`, but using style objects or built-in style presets.
 
 ```js
-import {
-  addConsoleSticky,
-  attachConsoleSticky,
-  attachConsoleStickySync,
-  AttachmentError,
-  AttachmentErrorReason,
-} from 'console.sticky'
+import { printStyledSticky, StickyPreset } from 'console.sticky'
 
-// You can optionally attach it to the global scope as console.sticky
-attachConsoleSticky()
-  .then(() => {
-    console.sticky('Important message!')
-  })
-  .catch((e) => {
-    // Try again, this time overriding any existing console.sticky
-    if (
-      e instanceof AttachmentError &&
-      e.reason === AttachmentErrorReason.AlreadyExists
-    )
-      return attachConsoleSticky(true)
-  })
-  .catch((e) => {
-    /* Couldn't attach to global scope, even with override */
-  })
+// Use a camelCased object of CSS rules to style the entire message
+printStyledSticky('Important Message!', {
+  color: 'white',
+  backgroundColor: 'purple',
+})
 
-// This can also be done synchronously
-const attached = attachConsoleStickySync()
+// Generic orange "warning" style
+printStyledSticky('Message!', StickyPreset.Warning)
 
-if (attached) {
-  console.sticky('Important message!')
-} else {
-  /* Failed to attach */
-}
+// Generic blue "notice" style
+printStyledSticky('Message!', StickyPreset.Notice)
 ```
 
-You can also remove stickies later if you no longer need them
+### removeSticky
 
-```js
-import { getAllConsoleStickies } from 'console.sticky'
+Removes a sticky.
 
-// Creating a sticky returns a Symbol key that can be used to manage it
-const key = addConsoleSticky('Important message!')
+Accepts a `symbol | undefined` key parameter obtained from calling `printSticky`
+or `printStyledSticky`.
 
-// You remove a sticky later
-removeConsoleSticky(key)
+**Returns** `true` if sticky exists and was able to be removed, otherwise false.
 
-// Or, you can remove them all with a single call
-removeAllConsoleStickies()
+### getAllStickies
 
-// Returns a Map<Symbol, Function> of all active stickies
-getAllConsoleStickies()
+**Returns** `Map<Symbol, Function>` of all active stickies
+
+### removeAllStickies
+
+Removes all stickies.
+
+**Returns** `true` if all stickies were able to be removed, otherwise false.
+
+## License
+
 This project has zero dependencies and is licensed under the
 [Apache 2.0 License](license.md).

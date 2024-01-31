@@ -10,23 +10,12 @@ function print(...args: unknown[]): void {
 }
 
 export function printSticky(...args: unknown[]): symbol | undefined {
-  // Convert non-circular objects to JSON strings
-  const convertedArgs: unknown[] = args.map((arg) => {
-    if (typeof arg === 'object') {
-      try {
-        return JSON.stringify(arg)
-      } catch (e) {}
-    }
-
-    return arg
-  })
-
   if (!consolePassthruKey) {
     const key = attachConsoleListenerPassthrus()
     if (!key) return
     consolePassthruKey = key
   }
 
-  print(...convertedArgs)
-  return addStickyPrinter(() => print(...convertedArgs))
+  print(...args)
+  return addStickyPrinter(() => print(...args))
 }

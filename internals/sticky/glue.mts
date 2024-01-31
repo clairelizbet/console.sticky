@@ -78,8 +78,13 @@ export function getStickyPrinters(): Map<symbol, ZeroArgFunction> {
   return stickyPrinters
 }
 
-export function removeStickyPrinter(key: symbol): boolean {
+export function removeStickyPrinter(key: symbol | undefined): boolean {
+  if (!key) return false
+
   const removalSucceeded = stickyPrinters.delete(key)
+
+  // Clear the interval as a side effect to clean up when there are no printers
   if (stickyPrinters.size === 0) clearInterval(interval)
+
   return removalSucceeded
 }

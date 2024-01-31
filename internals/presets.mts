@@ -1,4 +1,4 @@
-import { Styles } from './internals/types/styles.mjs'
+import { Styles } from './types/styles.mjs'
 
 export class BasePreset {
   styles: Styles
@@ -8,13 +8,13 @@ export class BasePreset {
   }
 }
 
-class ImportantMessagePreset extends BasePreset {
+class MessagePreset extends BasePreset {
   constructor(styles: Styles) {
     super({ ...styles, padding: '20px', fontSize: '24px' })
   }
 }
 
-class ImportantNoticePreset extends ImportantMessagePreset {
+class NoticePreset extends MessagePreset {
   constructor() {
     super({
       color: 'white',
@@ -23,7 +23,7 @@ class ImportantNoticePreset extends ImportantMessagePreset {
   }
 }
 
-class ImportantWarningPreset extends ImportantMessagePreset {
+class WarningPreset extends MessagePreset {
   constructor() {
     super({
       color: 'white',
@@ -33,6 +33,6 @@ class ImportantWarningPreset extends ImportantMessagePreset {
 }
 
 export const StickyPreset = Object.freeze({
-  ImportantNotice: new ImportantNoticePreset(),
-  ImportantWarning: new ImportantWarningPreset(),
+  Notice: new NoticePreset(),
+  Warning: new WarningPreset(),
 })

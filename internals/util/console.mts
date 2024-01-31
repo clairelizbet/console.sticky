@@ -1,8 +1,3 @@
-import {
-  AttachmentError,
-  AttachmentErrorReason,
-} from '../types/attachment-error.mjs'
-
 /**
  * Stores a mapping of loggers and their interceptors
  */
@@ -104,62 +99,6 @@ function tryGetNameForFn(
 
 export function consoleHasProperty(name: string | number | symbol): boolean {
   return name in globalThis.console
-}
-
-/**
- * Attaches the provided function to the global console object
- *
- * @param fn Function to attach
- * @param name If provided, will be used instead of fn.name
- * @param override Whether to override existing console property if it exists (defaults to not overriding)
- *
- * @returns {Promise<boolean>} Resolves to true if successful, rejects if not
- */
-export async function attachFnToConsole(
-  fn: Function,
-  name?: string,
-  override = false
-): Promise<boolean> {
-  const consolePropertyName: string = tryGetNameForFn(fn, name)
-
-  if (consoleHasProperty(consolePropertyName) && !override)
-    throw new AttachmentError(
-      'Function already exists on console',
-      AttachmentErrorReason.AlreadyExists
-    )
-
-  globalThis.console[consolePropertyName] = fn
-  return true
-}
-
-/**
- * Attaches the provided function to the global console object synchronously.
- * It is strongly recommended to provide an explicit name, as some code transformation tools
- * like bundlers and minifiers may change the name of the function, leading to unexcepted results.
- *
- * @param fn Function to attach
- * @param name Strong recommended. If provided, will be used instead of fn.name
- * @param override Whether to override existing console property if it exists (defaults to not overriding)
- *
- * @returns {boolean} True if successful, false if not
- */
-export function attachFnToConsoleSync(
-  fn: Function,
-  name?: string,
-  override = false
-): boolean {
-  try {
-    const consolePropertyName: string = tryGetNameForFn(fn, name)
-
-    if (consoleHasProperty(consolePropertyName) && !override) return false
-
-    globalThis.console[consolePropertyName] = fn
-  } catch (e) {
-    console.error(e)
-    return false
-  }
-
-  return true
 }
 
 /**

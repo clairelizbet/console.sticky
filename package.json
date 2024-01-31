@@ -30,6 +30,7 @@
   },
   "homepage": "https://github.com/clairelizbet/console.sticky#readme",
   "prettier": {
+    "proseWrap": "always",
     "trailingComma": "es5",
     "tabWidth": 2,
     "semi": false,
